@@ -2,7 +2,6 @@
 Analysis of music streaming services. Scraping data from Spotify and Youtube. 
 
 ## Database Schema
-
 * Artists: Store artist information (artist_id (primary key), name, popularity, followers).
 * Tracks: Store information about songs (song_id (primary key), artist_id (foreign key), name, popularity, album_id (foreign key), release date).
 * Albums: Store album information (e.g., album_id (primary key), artist_id (foreign key), name, release date).
