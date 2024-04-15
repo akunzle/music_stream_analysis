@@ -1,2 +1,2 @@
-# music_stream_analysis
-Analysis of music streaming services
+# Music Stream Analysis
+Analysis of music streaming services. Scraping data from Spotify and Youtube. 
