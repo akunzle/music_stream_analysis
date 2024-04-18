@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+import pandas as pd
 import os
 import base64
 from requests import post, get
@@ -256,6 +257,30 @@ def fetch_artist_genres(token, artist_id):
     response = get(url, headers=headers)
     artist_details = response.json()
     return artist_details.get('genres', [])  # Return genres list
+
+# Execute the query and write to CSV
+def query_to_csv():
+    conn = get_db_connection()
+    query = """
+    SELECT 
+        Tracks.name AS "Track Name", 
+        Tracks.popularity AS "Popularity",
+        Albums.name AS "Album Name", 
+        Artists.name AS "Artist Name", 
+        Albums.label,
+        Artists.genres
+    FROM 
+        Tracks
+    JOIN 
+        Albums ON Tracks.album_id = Albums.album_id
+    JOIN 
+        Artists ON Artists.artist_id = ANY(Albums.artist_ids)
+    ORDER BY Tracks.popularity DESC;
+    """
+    df = pd.read_sql_query(query, conn)
+    df.to_csv('labels_set.csv', index=False)  # Save to CSV without the DataFrame index
+
+query_to_csv()
 
 def main():
     create_tables()  # Ensure tables are created
